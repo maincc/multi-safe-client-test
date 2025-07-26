@@ -8,14 +8,24 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@babel/plugin-transform-class-properties": "^7.27.1",
+    "@safe-global/api-kit": "3",
+    "@safe-global/protocol-kit": "6.0.5",
+    "axios": "0.21.1",
+    "bignumber.js": "^9.3.1",
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.14",
     "vue": "^2.6.14",
+    "vue-clipboard2": "^0.3.3",
+    "vue-i18n": "8.25",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/plugin-transform-class-static-block": "^7.27.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -34,7 +44,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es2020": true
     },
     "extends": [
       "plugin:vue/essential",
@@ -44,7 +55,10 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off",
+      "vue/multi-word-component-names": "off"
+    }
   },
   "browserslist": [
     "> 1%",

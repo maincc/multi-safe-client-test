@@ -3,10 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import { createRoot } from "./js/render";
+
+import "./css/table.scss";
+
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount("#app");
+createRoot({ store, router, root: App });
