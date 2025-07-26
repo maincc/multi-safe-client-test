@@ -1,23 +1,65 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import _import from "./import-component";
+import { i18n } from "@/js/render";
 
 Vue.use(VueRouter);
 
-const routes = [
+export const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    redirect: "/welcome",
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/welcome",
+    name: "welcome",
+    component: _import("welcome"),
+  },
+  {
+    path: "/welcome/accounts",
+    name: "accounts",
+    component: _import("accounts"),
+  },
+  {
+    path: "/create",
+    name: "create",
+    component: _import("create"),
+  },
+  {
+    path: "/main",
+    name: "main",
+    redirect: "/home",
+    component: _import("mainView"),
+    meta: { isMenu: true },
+    children: [
+      {
+        path: "/home",
+        name: "home",
+        component: _import("home"),
+        meta: {
+          showMenu: false,
+          title: i18n.t("message.home"),
+        },
+      },
+      {
+        path: "/assets",
+        name: "assets",
+        component: _import("assets"),
+        meta: {
+          showMenu: false,
+          title: i18n.t("message.assets"),
+        },
+      },
+      {
+        path: "/transaction",
+        name: "transaction",
+        component: _import("transaction"),
+        meta: {
+          showMenu: false,
+          title: i18n.t("message.transaction"),
+        },
+      },
+    ],
   },
 ];
 
