@@ -18,7 +18,7 @@
         {{ $t("message.history") }}
       </div>
     </div>
-    <component :is="is"></component>
+    <component :is="is" :changeHistory="changeHistory"></component>
   </div>
 </template>
 
@@ -40,6 +40,11 @@ export default {
   components: {
     queue,
     history,
+  },
+  methods: {
+    changeHistory() {
+      this.is = "history";
+    },
   },
 };
 </script>

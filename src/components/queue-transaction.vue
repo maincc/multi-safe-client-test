@@ -36,7 +36,7 @@
       <el-table-column>
         <template slot-scope="scope">
           <el-button
-            v-if="canExecute"
+            v-if="canExecute(scope.row)"
             @click="executeTx(scope.row)"
             class="confirm-btn"
             >{{ $t("message.execute") }}</el-button
@@ -77,6 +77,12 @@ import transactionOperate from "@/components/transaction-operate";
 
 export default {
   name: "QueueTransaction",
+  props: {
+    changeHistory: {
+      type: Function,
+      default: () => {},
+    },
+  },
   computed: {
     ...mapGetters([
       "signer",
@@ -111,7 +117,9 @@ export default {
   },
   methods: {
     executeTx(tx) {
-      transactionOperate().execute(tx);
+      transactionOperate().execute(tx, () => {
+        this.changeHistory();
+      });
     },
     confirmTx(tx) {
       transactionOperate().confirm(tx, this.fetchPendingTx);
@@ -165,14 +173,11 @@ export default {
     canExecute(tx) {
       const { confirmations } = tx;
       const { threshold, owners } = this.safeInfo;
-      console.log(confirmations);
-      console.log(this.safeInfo);
       let haveConfirm = 0;
       confirmations.forEach((confirm) => {
-        const { owner } = confirm;
         if (
           owners.find((owner) => {
-            return owner.address == confirm.owner;
+            return owner == confirm.owner;
           })
         ) {
           haveConfirm++;

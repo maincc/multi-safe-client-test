@@ -15,6 +15,18 @@
     </div>
     <div class="content" style="margin-top: 50px">
       <div class="content-item">
+        <createTransaction
+          v-if="active == steps.create"
+          :type="createType"
+          :data="createData"
+          :updateTx="updateTx"
+          :close="close"
+          :followUp="
+            () => {
+              active = steps.confirm;
+            }
+          "
+        ></createTransaction>
         <confirm-transaction
           v-if="active == steps.confirm"
           :tx="tx"
@@ -44,6 +56,7 @@
 import { dealWithTxSteps } from "@/js/constant";
 import confirmTransaction from "./confirmTransaction.vue";
 import executeTransaction from "./executeTransaction.vue";
+import createTransaction from "./createTransaction.vue";
 import _ from "lodash";
 
 export default {
@@ -55,15 +68,25 @@ export default {
       active: 0,
       steps: dealWithTxSteps,
       followUp: () => {},
+      createType: "transfer",
+      createData: {},
     };
   },
   components: {
     confirmTransaction,
     executeTransaction,
+    createTransaction,
   },
   methods: {
     updateTx(tx) {
       this.tx = _.cloneDeep(tx);
+    },
+    create(type, data, followUp) {
+      this.visible = true;
+      this.active = this.steps.create;
+      this.followUp = followUp;
+      this.createType = type;
+      this.createData = data;
     },
     confirm(tx, followUp) {
       this.visible = true;
@@ -71,10 +94,11 @@ export default {
       this.active = this.steps.confirm;
       this.followUp = followUp;
     },
-    execute(tx) {
+    execute(tx, followUp) {
       this.visible = true;
       this.tx = tx;
       this.active = this.steps.execute;
+      this.followUp = followUp;
     },
     close() {
       this.visible = false;

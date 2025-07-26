@@ -19,7 +19,7 @@
       </el-table-column>
       <el-table-column>
         <template slot-scope="scope">
-          <el-button type="primary" @click="changeComponent(scope.row)">{{
+          <el-button type="primary" @click="createTx(scope.row)">{{
             $t("message.send")
           }}</el-button>
         </template>
@@ -32,15 +32,10 @@
 import { mapGetters } from "vuex";
 import { getAssets } from "@/js/api/v1/safe";
 import { BigNumber } from "bignumber.js";
+import transactionOperate from "@/components/transaction-operate";
 
 export default {
-  name: "AssetsContent",
-  props: {
-    changeComponent: {
-      type: Function,
-      default: () => {},
-    },
-  },
+  name: "assets",
   data() {
     return {
       loading: false,
@@ -69,6 +64,11 @@ export default {
     }
   },
   methods: {
+    createTx(tokenInfo) {
+      transactionOperate().create("transfer", tokenInfo, () => {
+        this.$router.push("/transaction");
+      });
+    },
     showAmount(balance, decimals, symbol) {
       return (
         new BigNumber(balance).div(new BigNumber(10).pow(decimals)).toNumber() +
