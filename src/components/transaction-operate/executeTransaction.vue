@@ -1,7 +1,13 @@
 <template>
   <div class="executeTransaction">
     <h1>executeTransaction</h1>
-    <el-button class="executeBtn" type="primary">execute</el-button>
+    <el-button
+      :loading="loading"
+      @click="execute"
+      class="executeBtn"
+      type="primary"
+      >execute</el-button
+    >
     <div class="tx-item">
       <div class="left">to:</div>
       <div class="right">{{ tx.to }}</div>
@@ -26,10 +32,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "executeTransaction",
   mounted() {
     console.log(this.tx);
+  },
+  data() {
+    return {
+      loading: false,
+    };
   },
   props: {
     tx: {
@@ -49,8 +62,33 @@ export default {
       default: () => {},
     },
   },
+  computed: {
+    ...mapGetters(["signer", "apiKit", "safeKit", "safeAccount", "chainId"]),
+  },
   methods: {
-    execute() {},
+    async execute() {
+      this.loading = true;
+      try {
+        const executeTxResponse = await this.safeKit.executeTransaction(
+          this.tx
+        );
+        if (executeTxResponse.hash) {
+          this.$message.success(
+            "execute success, tx hash: " + executeTxResponse.hash
+          );
+          this.close();
+          this.followUp();
+        } else {
+          this.$message.error(executeTxResponse.message);
+          this.$message.error("execute failed");
+        }
+      } catch (error) {
+        console.log(error);
+        this.$message.error(error.message);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 };
 </script>

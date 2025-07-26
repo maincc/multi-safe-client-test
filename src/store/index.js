@@ -21,7 +21,9 @@ export default new Vuex.Store({
     apiKit: (state) => {
       if (!state.chainId) return null;
       return new SafeApiKit({
-        chainId: state.chainId,
+        chainId: BigInt(state.chainId),
+        apiKey:
+          "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzYWZlLWF1dGgtc2VydmljZSIsInN1YiI6IjkwZTJmMTgzMTdjMTRiMTc4YWVkMjEzYjViYzg4ZjcyXzdiYTlkZmNmZDQ5NTQwZDI5ZDMxNTY5M2I0Y2JlZGE2Iiwia2V5IjoiOTBlMmYxODMxN2MxNGIxNzhhZWQyMTNiNWJjODhmNzJfN2JhOWRmY2ZkNDk1NDBkMjlkMzE1NjkzYjRjYmVkYTYiLCJhdWQiOlsic2FmZS1hdXRoLXNlcnZpY2UiXSwiZXhwIjoxOTEwODQ5MzMzLCJkYXRhIjp7fX0.u5q5M3WDzKy9Yt9HnhGwfEb-eCz5EwbR3_UJqP-GBK3muQYNakRsGPR5nT-6scKpg0wrmScAzLDvetI-YmlMmA",
       });
     },
     safeAccount: (state) => state.safeAccount,

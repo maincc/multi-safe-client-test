@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.27.1",
-    "@safe-global/api-kit": "3",
+    "@safe-global/api-kit": "^4.0.0",
     "@safe-global/protocol-kit": "6.0.5",
     "axios": "0.21.1",
     "bignumber.js": "^9.3.1",
