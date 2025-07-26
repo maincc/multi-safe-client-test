@@ -1156,13 +1156,13 @@
   resolved "https://registry.npmmirror.com/@polka/url/-/url-1.0.0-next.29.tgz"
   integrity sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==
 
-"@safe-global/api-kit@3":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@safe-global/api-kit/-/api-kit-3.0.2.tgz#4aefcfba1d0f5f53c4d9f462d72c9f40740e3313"
-  integrity sha512-+DQm88HRe4bDOHsvi/9HKT3foXe1aS1iOKyu2yAqnJOAXURtdjhYmsMHzsseA/3qzlepC9SdC/ZBwr2Do0vzgQ==
+"@safe-global/api-kit@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@safe-global/api-kit/-/api-kit-4.0.0.tgz#7c686258041bc0db5c5eac6a8f33862d679e7b85"
+  integrity sha512-xtLLi6OXguLw8cLoYnzCxqmirzRK4sSORxaiBDXdxJfBXIZLLKvYwQyDjsPL+2W4jKlJVcSLCw5EfolJahNMYg==
   dependencies:
-    "@safe-global/protocol-kit" "^6.0.5"
-    "@safe-global/types-kit" "^2.0.1"
+    "@safe-global/protocol-kit" "^6.1.0"
+    "@safe-global/types-kit" "^3.0.0"
     node-fetch "^2.7.0"
     viem "^2.21.8"
 
@@ -1181,7 +1181,7 @@
     "@noble/curves" "^1.6.0"
     "@peculiar/asn1-schema" "^2.3.13"
 
-"@safe-global/protocol-kit@^6.0.5":
+"@safe-global/protocol-kit@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@safe-global/protocol-kit/-/protocol-kit-6.1.0.tgz#0c987b08acb274da08a7b04ee06277e40b5d3fa8"
   integrity sha512-2f8jH6SLeNGZB6HnvU8aDV4L4HLOelwW042yGg/s6sZAJEvh7I+yejmIbsK8o02+fbXgdssNdqTD4I90erBiZQ==
