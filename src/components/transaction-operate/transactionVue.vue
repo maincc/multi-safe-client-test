@@ -21,11 +21,7 @@
           :data="createData"
           :updateTx="updateTx"
           :close="close"
-          :followUp="
-            () => {
-              active = steps.confirm;
-            }
-          "
+          :followUp="nextConfirm"
         ></createTransaction>
         <confirm-transaction
           v-if="active == steps.confirm"
@@ -78,6 +74,9 @@ export default {
     createTransaction,
   },
   methods: {
+    nextConfirm() {
+      this.active = this.steps.confirm;
+    },
     updateTx(tx) {
       this.tx = _.cloneDeep(tx);
     },

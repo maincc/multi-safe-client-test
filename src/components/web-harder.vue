@@ -36,8 +36,12 @@ export default {
             if (this.safeKit) {
               const isOwner = await this.safeKit.isOwner(accounts[0]);
               if (!isOwner) {
-                this.$store.dispatch("setSafeKit", null);
                 this.$router.push("/welcome/accounts");
+              } else {
+                const newSafeKit = await this.safeKit.connect({
+                  signer: accounts[0],
+                });
+                this.$store.dispatch("setSafeKit", newSafeKit);
               }
             }
           }

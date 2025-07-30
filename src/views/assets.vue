@@ -63,6 +63,9 @@ export default {
       this.loading = false;
     }
   },
+  destroyed() {
+    transactionOperate().close();
+  },
   methods: {
     createTx(tokenInfo) {
       transactionOperate().create("transfer", tokenInfo, () => {

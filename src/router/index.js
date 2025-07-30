@@ -42,6 +42,15 @@ export const routes = [
         },
       },
       {
+        path: "/newTransaction",
+        name: "newTransaction",
+        component: _import("newTransaction"),
+        meta: {
+          showMenu: false,
+          title: i18n.t("message.newTransaction"),
+        },
+      },
+      {
         path: "/assets",
         name: "assets",
         component: _import("assets"),

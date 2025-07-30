@@ -6,22 +6,20 @@
       :data="data"
       :updateTx="updateTx"
       :close="close"
-      :followUp="
-        () => {
-          active = steps.confirm;
-        }
-      "
+      :followUp="followUp"
     ></component>
   </div>
 </template>
 
 <script>
 import transfer from "./transfer.vue";
+import builder from "./builder.vue";
 
 export default {
   name: "createTransaction",
   components: {
     transfer,
+    builder,
   },
   props: {
     type: {

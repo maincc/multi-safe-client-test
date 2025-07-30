@@ -129,12 +129,12 @@ export default {
       try {
         const res = await this.apiKit.getPendingTransactions(this.safeAccount);
         this.queue = res.results;
-        this.queue.forEach(async (tx) => {
+        for (const tx of this.queue) {
           const { to, dataDecoded } = tx;
           if (dataDecoded) {
             if (dataDecoded.method == "transfer") {
               const tokenInfo = await this.apiKit.getToken(to);
-              return this.tokenAmounts.push(
+              this.tokenAmounts.push(
                 `-${new BigNumber(dataDecoded.parameters[1].value)
                   .div(new BigNumber(10).pow(tokenInfo.decimals))
                   .toNumber()} ${tokenInfo.symbol}`
@@ -156,7 +156,7 @@ export default {
               this.tokenAmounts.push("- -");
             }
           }
-        });
+        }
         this.next = res.next;
       } catch (error) {
         this.$message.error(error.message || error);
@@ -208,10 +208,14 @@ export default {
     },
     showTxMethod(tx) {
       if (tx.value == 0) {
-        if (tx.dataDecoded.method == "transfer") {
-          return "send";
+        if (tx.dataDecoded) {
+          if (tx.dataDecoded.method == "transfer") {
+            return "send";
+          } else {
+            return tx.dataDecoded.method;
+          }
         } else {
-          return tx.dataDecoded.method;
+          return "on-chain rejection";
         }
       }
       return "send";
