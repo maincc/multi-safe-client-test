@@ -14,12 +14,26 @@
 <script>
 import transfer from "./transfer.vue";
 import builder from "./builder.vue";
+import changeThreshold from "./changeThreshold.vue";
+import addOwner from "./addOwner.vue";
+import swapOwner from "./swapOwner.vue";
+import removeOwner from "./removeOwner.vue";
+import enableGuard from "./enableGuard.vue";
+import disableGuard from "./disableGuard.vue";
+import rejectTx from "./rejectTx.vue";
 
 export default {
   name: "createTransaction",
   components: {
     transfer,
     builder,
+    changeThreshold,
+    addOwner,
+    swapOwner,
+    removeOwner,
+    enableGuard,
+    disableGuard,
+    rejectTx,
   },
   props: {
     type: {

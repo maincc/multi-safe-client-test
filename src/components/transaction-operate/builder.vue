@@ -32,19 +32,39 @@
         ></el-input>
       </div>
     </div>
-
-    <div v-if="params.length > 0">
-      <div class="item" v-for="(item, index) in params" :key="index">
-        <div class="left">{{ item.name }}:</div>
-        <div class="right">
-          <el-input
-            style="width: 100%"
-            v-model="params[index].value"
-            :placeholder="item.type"
-          ></el-input>
+    <div v-if="params.length">
+      <div
+        v-for="(item, index) in params"
+        :key="index"
+        style="padding-bottom: 10px; border-bottom: 1px solid #eee"
+      >
+        <div
+          @click="selectFun = index"
+          style="cursor: pointer; width: 100%; background: #eee"
+        >
+          <span
+            >{{ method }}: {{ item.map((item) => item.name).join(",") }}</span
+          >
+        </div>
+        <div v-if="selectFun === index">
+          <div
+            class="item"
+            v-for="(input, input_index) in item"
+            :key="input_index"
+          >
+            <div class="left">{{ input.name }}:</div>
+            <div class="right">
+              <el-input
+                style="width: 100%"
+                v-model="input.value"
+                :placeholder="input.type"
+              ></el-input>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <el-button :loading="loading" @click="confirm" type="primary">
       {{ $t("message.confirm") }}
     </el-button>
@@ -64,6 +84,7 @@ export default {
       method: "",
       params: [],
       loading: false,
+      selectFun: 0,
     };
   },
   props: {
@@ -90,14 +111,17 @@ export default {
   watch: {
     method(val) {
       const abi = JSON.parse(this.abi);
-      const method = abi.find((item) => item.name === val);
-      const inputs = method.inputs;
-      this.params = inputs.map((item) => {
-        return {
-          name: item.name,
-          type: item.type,
-          value: "",
-        };
+      const functions = abi.filter(
+        (item) => item.name == val && item.type === "function"
+      );
+      this.params = functions.map((item) => {
+        return item.inputs.map((i) => {
+          return {
+            name: i.name,
+            type: i.type,
+            value: "",
+          };
+        });
       });
     },
   },
@@ -111,7 +135,7 @@ export default {
           this.contract
         );
         const data = contract.methods[`${this.method}`](
-          ...this.params.map((item) => item.value)
+          ...this.params[this.selectFun].map((item) => item.value)
         ).encodeABI();
         const tx = {
           to: this.contract,
