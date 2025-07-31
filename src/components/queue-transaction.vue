@@ -55,8 +55,13 @@
 
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <div style="white-space: pre-wrap">
-            {{ JSON.stringify(scope.row, null, 2) }}
+          <div>
+            <el-button @click="rejectTx(scope.row)" type="primary"
+              >reject</el-button
+            >
+            <div style="white-space: pre-wrap">
+              {{ JSON.stringify(scope.row, null, 2) }}
+            </div>
           </div>
         </template>
       </el-table-column>
@@ -116,6 +121,17 @@ export default {
     transactionOperate().close();
   },
   methods: {
+    rejectTx(tx) {
+      transactionOperate().create(
+        "rejectTx",
+        {
+          nonce: tx.nonce,
+        },
+        async () => {
+          await this.fetchPendingTx();
+        }
+      );
+    },
     executeTx(tx) {
       transactionOperate().execute(tx, () => {
         this.changeHistory();

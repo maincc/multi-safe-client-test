@@ -48,5 +48,16 @@
   "enterContract": "请输入合约地址",
   "abi": "ABI",
   "enterAbi": "请输入ABI",
-  "enterMethod": "请输入方法"
+  "enterMethod": "请输入方法",
+  "enterNewThreshold": "请输入新的阈值",
+  "oldThreshold": "旧的阈值",
+  "newThreshold": "新的阈值",
+  "newOwner": "新的所有者",
+  "enterNewOwner": "请输入新的所有者",
+  "oldOwner": "旧的所有者",
+  "removeOwner": "移除所有者",
+  "guard": "守卫合约",
+  "enterGuard": "请输入守卫合约地址",
+  "removeGuard": "移除守卫合约",
+  "rejectTxTip": "拒绝交易: 生成一个交易取代(nonce: {nonce})现有交易"
 }

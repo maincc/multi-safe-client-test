@@ -128,9 +128,10 @@ export default {
       text-align: left;
     }
     .right {
-      flex: 1;
+      width: calc(100% - 220px);
       text-align: left;
       white-space: pre-wrap;
+      word-break: break-word;
     }
   }
 }

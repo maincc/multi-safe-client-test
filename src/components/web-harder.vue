@@ -36,7 +36,9 @@ export default {
             if (this.safeKit) {
               const isOwner = await this.safeKit.isOwner(accounts[0]);
               if (!isOwner) {
-                this.$router.push("/welcome/accounts");
+                if (this.$route.path !== "/welcome/accounts") {
+                  this.$router.push("/welcome/accounts");
+                }
               } else {
                 const newSafeKit = await this.safeKit.connect({
                   signer: accounts[0],
