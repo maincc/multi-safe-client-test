@@ -74,6 +74,7 @@
 <script>
 import Web3 from "web3";
 import { mapGetters } from "vuex";
+import { debounce } from "lodash";
 
 export default {
   name: "builder",
@@ -109,31 +110,40 @@ export default {
     ...mapGetters(["signer", "apiKit", "safeKit", "safeAccount", "chainId"]),
   },
   watch: {
-    method(val) {
-      const abi = JSON.parse(this.abi);
-      const functions = abi.filter(
-        (item) => item.name == val && item.type === "function"
-      );
-      this.params = functions.map((item) => {
-        return item.inputs.map((i) => {
-          return {
-            name: i.name,
-            type: i.type,
-            value: "",
-          };
+    method: debounce(function (val) {
+      try {
+        const abi = JSON.parse(this.abi);
+        const functions = abi.filter(
+          (item) => item.name == val && item.type === "function"
+        );
+        this.params = functions.map((item) => {
+          return item.inputs.map((i) => {
+            return {
+              name: i.name,
+              type: i.type,
+              value: "",
+            };
+          });
         });
-      });
-    },
+      } catch (error) {
+        this.$message.error(this.$t("message.errorEnterAbiAndMethod"));
+      }
+    }, 500),
   },
   methods: {
     async confirm() {
       this.loading = true;
       try {
         const web3 = new Web3(window.ethereum);
+        if (!web3.utils.isAddress(this.contract)) {
+          this.$message.error(this.$t("message.errorEnterAddress"));
+          return;
+        }
         const contract = new web3.eth.Contract(
           JSON.parse(this.abi),
           this.contract
         );
+
         const data = contract.methods[`${this.method}`](
           ...this.params[this.selectFun].map((item) => item.value)
         ).encodeABI();

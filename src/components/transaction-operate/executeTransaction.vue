@@ -36,9 +36,6 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "executeTransaction",
-  mounted() {
-    console.log(this.tx);
-  },
   data() {
     return {
       loading: false,

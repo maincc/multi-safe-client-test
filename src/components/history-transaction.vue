@@ -60,6 +60,7 @@ import { mapGetters } from "vuex";
 import BigNumber from "bignumber.js";
 import { CHAIN_DECIMALS, CHAIN_SYMBOL } from "@/js/constant";
 import axios from "axios";
+import { apiKey } from "@/js/constant";
 
 export default {
   name: "HistoryTransaction",
@@ -97,7 +98,11 @@ export default {
       if (this.infiniteLoading || this.noMore || !this.next) return;
       this.infiniteLoading = true;
       try {
-        const res = await axios.get(this.next);
+        const res = await axios.get(this.next, {
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+          },
+        });
         const newData = res.data.results || [];
         if (newData.length === 0) {
           this.noMore = true;

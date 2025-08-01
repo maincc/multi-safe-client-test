@@ -30,3 +30,6 @@ export const dealWithTxSteps = {
   confirm: 1,
   execute: 2,
 };
+
+export const apiKey =
+  "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzYWZlLWF1dGgtc2VydmljZSIsInN1YiI6IjkwZTJmMTgzMTdjMTRiMTc4YWVkMjEzYjViYzg4ZjcyXzdiYTlkZmNmZDQ5NTQwZDI5ZDMxNTY5M2I0Y2JlZGE2Iiwia2V5IjoiOTBlMmYxODMxN2MxNGIxNzhhZWQyMTNiNWJjODhmNzJfN2JhOWRmY2ZkNDk1NDBkMjlkMzE1NjkzYjRjYmVkYTYiLCJhdWQiOlsic2FmZS1hdXRoLXNlcnZpY2UiXSwiZXhwIjoxOTEwODQ5MzMzLCJkYXRhIjp7fX0.u5q5M3WDzKy9Yt9HnhGwfEb-eCz5EwbR3_UJqP-GBK3muQYNakRsGPR5nT-6scKpg0wrmScAzLDvetI-YmlMmA";

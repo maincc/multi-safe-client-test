@@ -24,6 +24,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Web3 from "web3";
 
 export default {
   name: "changeThreshold",
@@ -58,6 +59,11 @@ export default {
     async confirm() {
       this.loading = true;
       try {
+        const web3 = new Web3(window.ethereum);
+        if (!web3.utils.isAddress(this.newOwner)) {
+          this.$message.error(this.$t("message.errorEnterAddress"));
+          return;
+        }
         const safeTx = await this.safeKit.createSwapOwnerTx({
           oldOwnerAddress: this.data.oldOwner,
           newOwnerAddress: this.newOwner,

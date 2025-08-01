@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import SafeApiKit from "@safe-global/api-kit";
 import Safe from "@safe-global/protocol-kit";
 import Web3 from "web3";
+import { apiKey } from "@/js/constant";
 
 Vue.use(Vuex);
 
@@ -22,8 +23,7 @@ export default new Vuex.Store({
       if (!state.chainId) return null;
       return new SafeApiKit({
         chainId: BigInt(state.chainId),
-        apiKey:
-          "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzYWZlLWF1dGgtc2VydmljZSIsInN1YiI6IjkwZTJmMTgzMTdjMTRiMTc4YWVkMjEzYjViYzg4ZjcyXzdiYTlkZmNmZDQ5NTQwZDI5ZDMxNTY5M2I0Y2JlZGE2Iiwia2V5IjoiOTBlMmYxODMxN2MxNGIxNzhhZWQyMTNiNWJjODhmNzJfN2JhOWRmY2ZkNDk1NDBkMjlkMzE1NjkzYjRjYmVkYTYiLCJhdWQiOlsic2FmZS1hdXRoLXNlcnZpY2UiXSwiZXhwIjoxOTEwODQ5MzMzLCJkYXRhIjp7fX0.u5q5M3WDzKy9Yt9HnhGwfEb-eCz5EwbR3_UJqP-GBK3muQYNakRsGPR5nT-6scKpg0wrmScAzLDvetI-YmlMmA",
+        apiKey: apiKey,
       });
     },
     safeAccount: (state) => state.safeAccount,
@@ -54,9 +54,15 @@ export default new Vuex.Store({
   actions: {
     setChainId: ({ commit }, chainId) => commit("SET_CHAIN_ID", chainId),
     setSigner: ({ commit }, address) =>
-      commit("SET_SIGNER", Web3.utils.toChecksumAddress(address)),
+      commit(
+        "SET_SIGNER",
+        address ? Web3.utils.toChecksumAddress(address) : ""
+      ),
     setSafeAccount: ({ commit }, address) =>
-      commit("SET_SAFE_ACCOUNT", Web3.utils.toChecksumAddress(address)),
+      commit(
+        "SET_SAFE_ACCOUNT",
+        address ? Web3.utils.toChecksumAddress(address) : ""
+      ),
     setSafesOfSigner: ({ commit }, safesOfSigner) =>
       commit("SET_SAFES_OF_SIGNER", safesOfSigner),
     setSafeKit: ({ commit }, safeKit) => commit("SET_SAFE_KIT", safeKit),

@@ -59,5 +59,7 @@
   "guard": "守卫合约",
   "enterGuard": "请输入守卫合约地址",
   "removeGuard": "移除守卫合约",
-  "rejectTxTip": "拒绝交易: 生成一个交易取代(nonce: {nonce})现有交易"
+  "rejectTxTip": "拒绝交易: 生成一个交易取代(nonce: {nonce})现有交易",
+  "errorEnterAddress": "请正确输入地址",
+  "errorEnterAbiAndMethod": "请检查输入的abi和method"
 }
