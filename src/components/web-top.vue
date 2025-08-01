@@ -1,5 +1,5 @@
 <template>
-  <div class="web-harder">
+  <div class="web-top">
     <div>
       <span v-if="chainId">{{ $t("message.chainId") }}: {{ chainId }}</span>
       <el-button v-if="signer" class="connectBtn" style="margin-left: 10px">
@@ -28,23 +28,30 @@ export default {
     try {
       const ethereum = window.ethereum;
       if (ethereum) {
-        ethereum.on("accountsChanged", async (accounts) => {
+        ethereum.on("accountsChanged", (accounts) => {
           if (accounts.length === 0) {
             this.$store.dispatch("setSigner", null);
+            if (this.$route.path !== "/welcome") {
+              this.$router.push("/welcome");
+            }
           } else {
             this.$store.dispatch("setSigner", accounts[0]);
             if (this.safeKit) {
-              const isOwner = await this.safeKit.isOwner(accounts[0]);
-              if (!isOwner) {
-                if (this.$route.path !== "/welcome/accounts") {
-                  this.$router.push("/welcome/accounts");
+              this.safeKit.isOwner(accounts[0]).then((isOwner) => {
+                if (!isOwner) {
+                  if (this.$route.path !== "/welcome/accounts") {
+                    this.$router.push("/welcome/accounts");
+                  }
+                } else {
+                  this.safeKit
+                    .connect({
+                      signer: accounts[0],
+                    })
+                    .then((newSafeKit) => {
+                      this.$store.dispatch("setSafeKit", newSafeKit);
+                    });
                 }
-              } else {
-                const newSafeKit = await this.safeKit.connect({
-                  signer: accounts[0],
-                });
-                this.$store.dispatch("setSafeKit", newSafeKit);
-              }
+              });
             }
           }
         });
@@ -101,7 +108,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.web-harder {
+.web-top {
   display: flex;
   justify-content: flex-end;
   padding: 10px;

@@ -1,6 +1,6 @@
 <template>
   <div class="index-view">
-    <web-harder></web-harder>
+    <web-top></web-top>
     <div class="content">
       <router-view></router-view>
     </div>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import WebHarder from "../components/web-harder.vue";
+import WebTop from "../components/web-top.vue";
 export default {
   name: "indexView",
   components: {
-    WebHarder,
+    WebTop,
   },
 };
 </script>

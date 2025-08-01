@@ -14,6 +14,7 @@
       <div class="left">{{ $t("message.amount") }}</div>
       <div class="right">
         <el-input
+          type="number"
           style="width: 100%"
           v-model="amount"
           :placeholder="$t('message.enterAmount')"
@@ -66,6 +67,11 @@ export default {
     async confirm() {
       this.loading = true;
       try {
+        const web3 = new Web3(window.ethereum);
+        if (!web3.utils.isAddress(this.recipient)) {
+          this.$message.error(this.$t("message.errorEnterAddress"));
+          return;
+        }
         const { tokenInfo } = this.data;
         let tx = null;
         if (tokenInfo.address == "0x0000000000000000000000000000000000000000") {
